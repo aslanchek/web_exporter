@@ -1,0 +1,15 @@
+name: say-hello
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  hello:
+    name: Say hello
+    steps:
+      - name: Echo to terminal
+        run: |
+          echo hello!
+
