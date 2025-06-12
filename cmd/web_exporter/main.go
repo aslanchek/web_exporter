@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"web_exporter/internal/collector"
+	"web_exporter/pkg/logger"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -31,6 +32,8 @@ var (
 )
 
 func main() {
+	logger.Logf(logger.MainLogPrefix, "Hello!\n")
+
 	flag.Parse()
 
 	var URL = "http://" + *API3XUIHOST + ":" + *API3XUIPORT
