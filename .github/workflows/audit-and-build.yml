@@ -55,7 +55,6 @@ jobs:
           buildkitd-config-inline: |
             [registry."{{ vars.CONTAINER_REGISTRY }}"]
               http = true
-              insecure = true
       
       - uses: docker/metadata-action@v5
         id: meta
