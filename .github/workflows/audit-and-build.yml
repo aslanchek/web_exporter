@@ -75,7 +75,8 @@ jobs:
           context: .      
           push: true
           file: scripts/build/package/Dockerfile
-          build-args: GOPROXY=${{ vars.GORPOXY_URL }}
+          build-args: |
+            GOPROXY=${{ vars.GOPROXY_URL }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
    
