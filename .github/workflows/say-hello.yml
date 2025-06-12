@@ -6,35 +6,9 @@ on:
   pull_request:
 
 jobs:
-  hello:
-    name: Fetch and get
-    runs-on: self-hosted
-    steps:
-      - name: download and unpack some tar
-        env: 
-          URL: ${{ vars.SOMETARURL }}
-          FILE: ${{ vars.SOMETARFILE }}
-        run: |
-          wget $URL
-          tar xzvf $FILE
-          file $FILE
-
-      - name: check
-        run: |
-          echo $URL
-          echo $FILE
-
-      - name: double check
-        run: |
-          echo ${{ vars.SOMETARURL }}
-          echo ${{ vars.SOMETARFILE }}
-
-      - run: ls
-      - run: pwd
-
   what:
     name: Check
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - run: ls
       - run: pwd
@@ -42,4 +16,6 @@ jobs:
       - run: ip a
       - run: cat /etc/os-release
       - run: whoami
+      - run: echo $HOME
+      - run: printenv
 
