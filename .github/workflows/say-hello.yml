@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: download and unpack some tar
         run: |
-          wget $URL
-          tar xzvf $FILE
-          file $FILE
-        env:
-          URL: ${{ env.SOMETARURL }}
-          FILE: ${{ env.SOMETARFILE }}
+          wget ${{ env.SOMETARURL }}
+          tar xzvf ${{ env.SOMETARFILE }}
+          file ${{ env.SOMETARFILE }}
