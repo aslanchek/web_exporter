@@ -53,8 +53,8 @@ jobs:
       - uses: docker/metadata-action@v5
         id: meta
         with:
-          flavor: |
-            prefix=${{ vars.CONTAINER_REGISTRY_URL }}
+          images: |
+            ${{ vars.CONTAINER_REGISTRY }}
 
       - name: Check for metadata
         env:
@@ -62,7 +62,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
         run: |
           echo $tags
-          echo $labels
         
       - uses: docker/build-push-action@v6
         with:
