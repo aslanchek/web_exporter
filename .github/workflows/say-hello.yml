@@ -29,6 +29,9 @@ jobs:
           echo ${{ vars.SOMETARURL }}
           echo ${{ vars.SOMETARFILE }}
 
+      - run: ls
+      - run: pwd
+
   what:
     name: Check
     runs-on: ubuntu-latest
