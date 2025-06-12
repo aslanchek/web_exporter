@@ -45,6 +45,7 @@ func (c *WebCollector) reauth() error {
 	return nil
 }
 
+/*
 var (
 	clientsOnline = prometheus.NewDesc(
 		prometheus.BuildFQName("", "web", "clients_online"),
@@ -53,6 +54,7 @@ var (
 		nil,
 	)
 )
+*/
 
 func (e *WebCollector) Describe(ch chan<- *prometheus.Desc) {
 	prometheus.DescribeByCollect(e, ch)
