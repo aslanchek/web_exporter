@@ -7,7 +7,7 @@ on:
 
 jobs:
   audit:
-    name: lint
+    name: Run linter and tests
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
@@ -28,4 +28,26 @@ jobs:
           
       - name: Run unit tests
         run: go test ./...
+
+  package:
+    name: Build and push docker image
+    needs: audit
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: scripts/build/package/Dockerfile
+          push: false
+
+  aboba:
+    name: Run Aboba
+    runs-on: self-hosted
+    steps:
+      - run: |
+        echo Hello!
       
