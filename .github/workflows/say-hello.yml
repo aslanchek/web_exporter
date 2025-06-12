@@ -29,3 +29,14 @@ jobs:
           echo ${{ vars.SOMETARURL }}
           echo ${{ vars.SOMETARFILE }}
 
+  what:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls
+      - run: pwd
+      - run: uname -a
+      - run: ip a
+      - run: cat /etc/os-release
+      - run: whoami
+
