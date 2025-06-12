@@ -44,10 +44,3 @@ jobs:
           file: scripts/build/package/Dockerfile
           push: false
 
-  aboba:
-    name: Run Aboba
-    runs-on: self-hosted
-    steps:
-      - run: |
-        echo Hello!
-      
