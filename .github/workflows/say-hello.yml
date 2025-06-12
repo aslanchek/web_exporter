@@ -11,10 +11,10 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: download and unpack some tar
-        env:
-          URL: ${{ env.SOMETARURL }}
-          FILE: ${{ env.SOMETARFILE }}
         run: |
           wget $URL
           tar xzvf $FILE
           file $FILE
+        env:
+          URL: ${{ env.SOMETARURL }}
+          FILE: ${{ env.SOMETARFILE }}
