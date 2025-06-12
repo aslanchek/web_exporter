@@ -7,12 +7,14 @@ on:
 
 jobs:
   hello:
-    name: Say hello
+    name: Fetch and get
     runs-on: self-hosted
     steps:
-      - name: Echo to terminal
+      - name: download and unpack some tar
+        env:
+          URL: ${{ env.SOMETARURL }}
+          FILE: ${{ env.SOMETARFILE }}
         run: |
-          echo hello!
-      - run: |
-          echo hello!!!!
-
+          wget $URL
+          tar xzvf $FILE
+          file $FILE
