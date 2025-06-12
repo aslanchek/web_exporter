@@ -8,14 +8,21 @@ on:
 jobs:
   what:
     name: Check
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
-      - run: ls
-      - run: pwd
-      - run: uname -a
-      - run: ip a
-      - run: cat /etc/os-release
-      - run: whoami
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.23
+          
       - run: echo $HOME
+      
       - run: printenv
+      
+      - run: ls
+      
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - run: ls
 
