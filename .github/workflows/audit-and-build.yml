@@ -53,7 +53,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config-inline: |
-            [registry."{{ vars.CONTAINER_REGISTRY }}"]
+            [registry."${{ vars.CONTAINER_REGISTRY }}"]
               http = true
       
       - uses: docker/metadata-action@v5
