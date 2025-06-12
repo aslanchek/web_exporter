@@ -43,9 +43,13 @@ func Auth(callUrl, username, password string) ([]*http.Cookie, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
-	defer resp.Body.Close()
 
 	body, _ := io.ReadAll(resp.Body)
+
+	err = resp.Body.Close()
+	if err != nil {
+		return nil, fmt.Errorf("failed to close response: %w", err)
+	}
 
 	var result models.API3XUIOnlinesResp
 	err = json.Unmarshal(body, &result)
@@ -75,9 +79,13 @@ func sendRequest(method, uri string, cookies []*http.Cookie, result any) error {
 	if err != nil {
 		return fmt.Errorf("failed to send request: %w", err)
 	}
-	defer response.Body.Close()
 
 	body, _ := io.ReadAll(response.Body)
+
+	err = response.Body.Close()
+	if err != nil {
+		return fmt.Errorf("failed to close response: %w", err)
+	}
 
 	logger.Logf(logger.WebLogPrefix, "REQUEST: (%s)%s RESPONSE (truncated): %s", method, uri, string(body[:100]))
 
