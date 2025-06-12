@@ -1,0 +1,16 @@
+[Unit]
+Description=Web statistics exporter
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=web_exporter
+Group=web_exporter
+EnvironmentFile=/etc/web_exporter/env
+ExecStart=/usr/local/bin/web_exporter -port=59200 -tls=true -key=/etc/web_exporter/crt/web_exporter.key -cert=/etc/web_exporter/crt/web_exporter.crt -ca=/etc/web_exporter/crt/rootCA.crt
+
+[Install]
+WantedBy=multi-user.target
