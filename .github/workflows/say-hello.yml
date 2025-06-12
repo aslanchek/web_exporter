@@ -8,8 +8,11 @@ on:
 jobs:
   hello:
     name: Say hello
+    runs-on: self-hosted
     steps:
       - name: Echo to terminal
         run: |
           echo hello!
+      - run: |
+          echo hello!!!!
 
