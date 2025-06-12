@@ -54,7 +54,7 @@ jobs:
         id: meta
         with:
           images: |
-            ${{ vars.CONTAINER_REGISTRY }}
+            ${{ vars.CONTAINER_REGISTRY }}/${{ github.repository }}
 
       - name: Check for metadata
         env:
