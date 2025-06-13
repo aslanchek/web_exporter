@@ -55,25 +55,18 @@ jobs:
           buildkitd-config-inline: |
             [registry."${{ vars.CONTAINER_REGISTRY }}"]
               http = true
-      
-      - uses: docker/metadata-action@v5
-        id: meta
-        with:
-          images: |
-            ${{ vars.CONTAINER_REGISTRY }}/${{ github.repository }}
-
-      - run: |
-          echo $BRANCH_NAME
-        env: 
-          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-        
+       
       - uses: docker/build-push-action@v6
         with:
           context: .      
           push: true
           file: scripts/build/package/Dockerfile
+          tags: $REGISTRY/$REPOSITORY:$BRANCH_NAME
           build-args: |
             GOPROXY=${{ vars.GOPROXY_URL }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+        env: 
+          REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+       
    
