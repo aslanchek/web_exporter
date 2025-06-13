@@ -1,5 +1,4 @@
 name: Manual Trigger Action
-
 on:
   workflow_dispatch:
 
