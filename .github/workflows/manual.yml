@@ -1,0 +1,14 @@
+name: Manual Trigger Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: [MODULE1, MODULE2, MODULE3]
+        present: [false, true]
+    steps:
+      run: echo "${{ matrix.module }}=${{ matrix.present }}"
