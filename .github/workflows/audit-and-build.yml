@@ -63,8 +63,9 @@ jobs:
             ${{ vars.CONTAINER_REGISTRY }}/${{ github.repository }}
 
       - run: |
-          echo >>${{ github.ref_name }}<<
-          echo >>${{ github.head_ref }}<<
+          echo $BRANCH_NAME
+        env: 
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         
       - uses: docker/build-push-action@v6
         with:
