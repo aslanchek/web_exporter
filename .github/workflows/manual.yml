@@ -24,6 +24,6 @@ jobs:
         module: [MODULE1, MODULE2, MODULE3]
         present: [false, true]
     steps:
-    - name: Send greeting
-      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
+      - name: Send greeting
+        run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
       - run: echo "${{ matrix.module }}=${{ matrix.present }}"
