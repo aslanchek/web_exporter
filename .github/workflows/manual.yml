@@ -2,17 +2,28 @@ name: Manual Trigger Action
 on:
   workflow_dispatch:
     inputs:
-      hello-message:
-        description: Some workflow input
-        type: string
+      name:
+        type: choice
+        description: Who to greet
+        options:
+        - monalisa
+        - cschleiden
+      message:
+        required: true
+      use-emoji:
+        type: boolean
+        description: Include 🎉🤣 emojis
+      environment:
+        type: environment
 
 jobs:
-  deliver:
+  greet:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         module: [MODULE1, MODULE2, MODULE3]
         present: [false, true]
     steps:
-      - run: echo ${{ inputs.hello-message }}
+    - name: Send greeting
+      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
       - run: echo "${{ matrix.module }}=${{ matrix.present }}"
