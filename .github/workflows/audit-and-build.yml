@@ -55,18 +55,21 @@ jobs:
           buildkitd-config-inline: |
             [registry."${{ vars.CONTAINER_REGISTRY }}"]
               http = true
+      
+      - name: Collect image tag
+        run: echo "tag=$REGISTRY/$REPOSITORY:$BRANCH_NAME" >> $GITHUB_OUTPUT
+        id: collect_image_tag
+        env: 
+          REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
        
       - uses: docker/build-push-action@v6
         with:
           context: .      
           push: true
           file: scripts/build/package/Dockerfile
-          tags: $REGISTRY/$REPOSITORY:$BRANCH_NAME
+          tags: {{ steps.collect_image_tag.outputs.tag }}
           build-args: |
             GOPROXY=${{ vars.GOPROXY_URL }}
-        env: 
-          REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
-          REPOSITORY: ${{ github.repository }}
-          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-       
-   
+
