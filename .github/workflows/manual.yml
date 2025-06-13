@@ -10,4 +10,4 @@ jobs:
         module: [MODULE1, MODULE2, MODULE3]
         present: [false, true]
     steps:
-      run: echo "${{ matrix.module }}=${{ matrix.present }}"
+      - run: echo "${{ matrix.module }}=${{ matrix.present }}"
