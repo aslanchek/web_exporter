@@ -56,26 +56,20 @@ jobs:
             [registry."${{ vars.CONTAINER_REGISTRY }}"]
               http = true
       
-      - uses: docker/metadata-action@v5
-        id: meta
-        with:
-          images: |
-            ${{ vars.CONTAINER_REGISTRY }}/${{ github.repository }}
-
-      - name: Check for metadata
-        env:
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-        run: |
-          echo $tags
-        
+      - name: Collect image tag
+        run: echo "tag=$REGISTRY/$REPOSITORY:$BRANCH_NAME" >> $GITHUB_OUTPUT
+        id: collect_image_tag
+        env: 
+          REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+       
       - uses: docker/build-push-action@v6
         with:
           context: .      
           push: true
           file: scripts/build/package/Dockerfile
+          tags: ${{ steps.collect_image_tag.outputs.tag }}
           build-args: |
             GOPROXY=${{ vars.GOPROXY_URL }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-   
+
