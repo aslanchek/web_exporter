@@ -27,3 +27,7 @@ jobs:
       - name: Send greeting
         run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
       - run: echo "${{ matrix.module }}=${{ matrix.present }}"
+      - name: generate summary
+        run: echo '### Hello world! 🚀' >> $GITHUB_STEP_SUMMARY
+      - name: generate another summary
+        run: echo '### Hello: ${{ github.event.inputs.message }}' >> $GITHUB_STEP_SUMMARY
