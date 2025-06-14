@@ -100,6 +100,6 @@ jobs:
           build-args: |
             GOPROXY=${{ vars.GOPROXY_URL }}
 
-          cache-from: type=local,src=/home/github-runner/.cache/buildx-cache
-          cache-to: type=local,dest=/home/github-runner/.cache/buildx-cache,mode=max
+          cache-from: type=local,src=/home/github-runner/.cache/docker-cache
+          cache-to: type=local,dest=/home/github-runner/.cache/docker-cache,mode=max
 
