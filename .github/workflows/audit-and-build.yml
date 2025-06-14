@@ -14,23 +14,34 @@ jobs:
         with:
           fetch-depth: 0
           
+      # автоматически кеширует с помощью action/cache 
+      # согласно доке
+      #
+      # версия go-verson должна точно совпадать с 
+      # той, что в go.mod, см:  https://github.com/actions/setup-go/issues/424
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.23
-          
-      - name: Setup Golang caches
-        uses: actions/cache@v4
-        with:
-         path: |
-          ~/.cache/go-build
-          ~/go/pkg/mod
-         key: ${{ runner.os }}-golang-${{ hashFiles('**/go.sum') }}
-         restore-keys: |
-           ${{ runner.os }}-golang-
+          go-version: 1.23.3
+
+      # это не нужно, так как golang кеш сохраняется
+      # в ~/.cache/go-build и ~/go/pkg/mod поэтому он
+      # сохраняется между запусками
+       
+#      - name: Setup Golang caches
+#        uses: actions/cache@v4
+#        with:
+#         path: |
+#          ~/.cache/go-build
+#          ~/go/pkg/mod
+#         key: ${{ runner.os }}-golang-${{ hashFiles('**/go.sum') }}
+#         restore-keys: |
+#           ${{ runner.os }}-golang-
           
       - name: Verify deps
         run: go mod verify
         
+      # автоматически кеширует с помощью action/cache 
+      # согласно доке
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8
         with:
@@ -48,6 +59,8 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Для того чтобы была возможность ходить на
+      # локальный регистри по http устанавливаем config, см:
       # https://github.com/docker/build-push-action/issues/44
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -63,6 +76,20 @@ jobs:
           REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
           REPOSITORY: ${{ github.repository }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+
+      # это не нужно, так как buildx кеш сохраняется в ~/.cache/docker-cache
+      # на (!) selfhosted раннере поэтому он сохраняется между запусками.
+      # Но если такое сохранение нужно на раннерах Github'а, то необходимо добавить:
+      # P.S. пути кешей в build-push-action должны совпадать
+
+#      - name: Cache Docker layers
+#        uses: actions/cache@v4
+#        with:
+#          path: /home/github-runner/.cache/docker-cache
+#          key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
+#          restore-keys: |
+#            ${{ runner.os }}-buildx-
        
       - uses: docker/build-push-action@v6
         with:
@@ -72,4 +99,7 @@ jobs:
           tags: ${{ steps.collect_image_tag.outputs.tag }}
           build-args: |
             GOPROXY=${{ vars.GOPROXY_URL }}
+
+          cache-from: type=local,src=/home/github-runner/.cache/docker-cache
+          cache-to: type=local,dest=/home/github-runner/.cache/docker-cache,mode=max
 

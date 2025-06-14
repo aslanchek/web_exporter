@@ -16,13 +16,13 @@ import (
 
 // cmd opts
 var (
-	API3XUIHOST  = flag.String("api-host", "127.0.0.1", "web api hostname")
-	API3XUIPORT  = flag.String("api-port", "8000", "web api port")
+	WEBHOST      = flag.String("api-host", "127.0.0.1", "web api hostname")
+	WEBPORT      = flag.String("api-port", "8000", "web api port")
 	EXPORTERBIND = flag.String("bind", "", "exporter bind address")
 	EXPORTERPORT = flag.String("port", "9200", "exporter bind port")
 
-	USERNAME = os.Getenv("THE3XUI_USERNAME")
-	PASSWORD = os.Getenv("THE3XUI_PASSWORD")
+	USERNAME = os.Getenv("WEB_USERNAME")
+	PASSWORD = os.Getenv("WEB_PASSWORD")
 
 	UseTLS = flag.Bool("tls", false, "wheter or not use TLS (see -key, -cert and -ca)")
 
@@ -36,7 +36,7 @@ func main() {
 
 	flag.Parse()
 
-	var URL = "http://" + *API3XUIHOST + ":" + *API3XUIPORT
+	var URL = "http://" + *WEBHOST + ":" + *WEBPORT
 	var ADDR = *EXPORTERBIND + ":" + *EXPORTERPORT
 
 	exporter := collector.NewThe3XUICollector(URL, USERNAME, PASSWORD)

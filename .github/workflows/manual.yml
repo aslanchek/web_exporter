@@ -26,4 +26,6 @@ jobs:
     steps:
       - name: Send greeting
         run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
-      - run: echo "${{ matrix.module }}=${{ matrix.present }}"
+
+      - name: Echo matrix entry
+        run: echo "${{ matrix.module }}=${{ matrix.present }}"
