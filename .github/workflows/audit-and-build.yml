@@ -14,8 +14,8 @@ jobs:
         with:
           fetch-depth: 0
           
-      # автоматически кеширует с помощью action/cache 
-      # согласно доке
+      # автоматически под капотом кеширует 
+      # с помощью action/cache начиная с v4
       #
       # версия go-verson должна точно совпадать с 
       # той, что в go.mod, см:  https://github.com/actions/setup-go/issues/424
@@ -40,8 +40,8 @@ jobs:
       - name: Verify deps
         run: go mod verify
         
-      # автоматически кеширует с помощью action/cache 
-      # согласно доке
+      # Полагается на кеш от actions/setup-go, поэтому
+      # ему отдельный actions/cache
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8
         with:
