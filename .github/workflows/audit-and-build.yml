@@ -23,7 +23,7 @@ jobs:
         with:
           go-version: 1.23.3
 
-      # это не нужно, так как buildx кеш сохраняется
+      # это не нужно, так как golang кеш сохраняется
       # в ~/.cache/go-build и ~/go/pkg/mod поэтому он
       # сохраняется между запусками
        
@@ -79,7 +79,9 @@ jobs:
 
 
       # это не нужно, так как buildx кеш сохраняется в ~/.cache/docker-cache
-      # поэтому он сохраняется между запусками
+      # на (!) selfhosted раннере поэтому он сохраняется между запусками.
+      # Но если такое сохранение нужно на раннерах Github'а, то необходимо добавить:
+      # P.S. пути кешей в build-push-action должны совпадать
 
 #      - name: Cache Docker layers
 #        uses: actions/cache@v4
@@ -98,6 +100,6 @@ jobs:
           build-args: |
             GOPROXY=${{ vars.GOPROXY_URL }}
 
-          cache-from: type=local,src=/home/github-runner/.cache/docker-cache
-          cache-to: type=local,dest=/home/github-runner/.cache/docker-cache,mode=max
+          cache-from: type=local,src=/home/github-runner/.cache/buildx-cache
+          cache-to: type=local,dest=/home/github-runner/.cache/buildx-cache,mode=max
 
