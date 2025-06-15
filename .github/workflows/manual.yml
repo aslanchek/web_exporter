@@ -9,7 +9,7 @@ on:
         - monalisa
         - cschleiden
       message:
-        default: "default-message: ${{ vars.DEFAULT_MESSAGE_RESERVE }}"
+        default: default-message:${{ vars.DEFAULT_MESSAGE_RESERVE }}
         required: false
       use-emoji:
         type: boolean
