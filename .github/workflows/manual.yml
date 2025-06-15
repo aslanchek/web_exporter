@@ -15,6 +15,13 @@ on:
         description: Include 🎉🤣 emojis
       environment:
         type: environment
+      choice-boolean:
+        type: choice
+        required: true
+        default: 'false'
+        options:
+          - true
+          - false
 
 jobs:
   greet:
