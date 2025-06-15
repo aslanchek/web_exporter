@@ -9,6 +9,7 @@ on:
         - monalisa
         - cschleiden
       message:
+        default: "default-message: ${{ vars.DEFAULT_MESSAGE_RESERVE }}"
         required: false
       use-emoji:
         type: boolean
@@ -31,7 +32,7 @@ jobs:
       BOOL: true
       BOOL_TEXT: 'true'
       VARIABLE1: ${{ github.event.inputs.message || 'true' }}
-      VARIABLE2: ${{ github.event.inputs.message || vars.DEFAULT_MESSAGE || vars.DEFAULT_MESSAGE_RESERVE }}
+      VARIABLE2: ${{ github.event.inputs.message || vars.DEFAULT_MESSAGE }}
 
     strategy:
       matrix:
