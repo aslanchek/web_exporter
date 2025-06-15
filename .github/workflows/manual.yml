@@ -9,7 +9,7 @@ on:
         - monalisa
         - cschleiden
       message:
-        required: true
+        required: false
       use-emoji:
         type: boolean
         description: Include 🎉🤣 emojis
@@ -27,6 +27,10 @@ on:
 jobs:
   greet:
     runs-on: ubuntu-latest
+    env:
+      VARIABLE1: ${{ github.event.inputs.message || "true" }}
+      VARIABLE2: ${{  "false" || github.event.inputs.message }}
+
     strategy:
       matrix:
         module: [MODULE1, MODULE2, MODULE3]
@@ -37,3 +41,8 @@ jobs:
 
       - name: Echo matrix entry
         run: echo "${{ matrix.module }}=${{ matrix.present }}"
+
+      - name: Check for vars default vaule
+        run: |
+          echo $VARIABLE1
+          echo $VARIABLE2
