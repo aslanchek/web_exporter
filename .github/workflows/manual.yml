@@ -28,8 +28,10 @@ jobs:
   greet:
     runs-on: ubuntu-latest
     env:
-      VARIABLE1: ${{ github.event.inputs.message || "true" }}
-      VARIABLE2: ${{  "false" || github.event.inputs.message }}
+      BOOL: true
+      BOOL_TEXT: 'true'
+      VARIABLE1: ${{ github.event.inputs.message || 'true' }}
+      VARIABLE2: ${{  'false' || github.event.inputs.message }}
 
     strategy:
       matrix:
