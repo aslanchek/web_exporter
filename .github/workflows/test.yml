@@ -6,6 +6,10 @@ jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
-      - name: Check for vars default vaule
-        run: |
+      - run: |
           pwd
+          ls
+      - uses: actions/checkout@v5
+      - run: |
+          pwd
+          ls
