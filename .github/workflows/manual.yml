@@ -49,3 +49,14 @@ jobs:
         run: |
           echo $VARIABLE1
           echo $VARIABLE2
+
+      - name: check id
+        run: |
+          echo ${{ github.run_id }}
+
+  another-job:
+    runs-on: macos-latest
+    steps:
+      - name: check id
+        run: |
+          echo ${{ github.run_id }}
